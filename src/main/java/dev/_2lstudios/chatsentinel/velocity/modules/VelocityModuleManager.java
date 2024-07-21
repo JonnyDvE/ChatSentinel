@@ -23,11 +23,13 @@ public class VelocityModuleManager extends ModuleManager {
 		configUtil.create("messages.yml");
 		configUtil.create("blacklist.yml");
 		configUtil.create("whitelist.yml");
+		configUtil.create("whitelist_cooldown.yml");
 
 		CommentedConfigurationNode blacklistYml = configUtil.get("blacklist.yml");
 		CommentedConfigurationNode configYml = configUtil.get("config.yml");
 		CommentedConfigurationNode messagesYml = configUtil.get("messages.yml");
 		CommentedConfigurationNode whitelistYml = configUtil.get("whitelist.yml");
+		CommentedConfigurationNode whitelistCooldownYml = configUtil.get("whitelist_cooldown.yml");
 		Map<String, Map<String, String>> locales = new HashMap<>();
 
 		for (Object lang : messagesYml.node("langs").childrenMap().keySet()) {
@@ -61,7 +63,10 @@ public class VelocityModuleManager extends ModuleManager {
 				configYml.node("cooldown", "time", "repeat-global").getInt(),
 				configYml.node("cooldown", "time", "repeat").getInt(),
 				configYml.node("cooldown", "time", "normal").getInt(),
-				configYml.node("cooldown", "time", "command").getInt());
+				configYml.node("cooldown", "time", "command").getInt(),
+				whitelistCooldownYml.node("expressions").childrenList().stream()
+						.map(ConfigurationNode::getString)
+						.toArray(String[]::new));
 		getFloodModule().loadData(configYml.node("flood", "enabled").getBoolean(),
 				configYml.node("flood", "replace").getBoolean(),
 				configYml.node("flood", "warn", "max").getInt(), configYml.node("flood", "pattern").getString(),

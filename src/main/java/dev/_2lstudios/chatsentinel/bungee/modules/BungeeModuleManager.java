@@ -21,11 +21,13 @@ public class BungeeModuleManager extends ModuleManager {
 		configUtil.create("%datafolder%/messages.yml");
 		configUtil.create("%datafolder%/blacklist.yml");
 		configUtil.create("%datafolder%/whitelist.yml");
+		configUtil.create("%datafolder%/whitelist_cooldown.yml");
 
 		Configuration blacklistYml = configUtil.get("%datafolder%/blacklist.yml");
 		Configuration configYml = configUtil.get("%datafolder%/config.yml");
 		Configuration messagesYml = configUtil.get("%datafolder%/messages.yml");
 		Configuration whitelistYml = configUtil.get("%datafolder%/whitelist.yml");
+		Configuration whitelistCooldownYml = configUtil.get("%datafolder%/whitelist_cooldown.yml");
 		Map<String, Map<String, String>> locales = new HashMap<>();
 
 		for (String lang : messagesYml.getSection("langs").getKeys()) {
@@ -47,7 +49,8 @@ public class BungeeModuleManager extends ModuleManager {
 				configYml.getStringList("caps.punishments").toArray(new String[0]));
 		getCooldownModule().loadData(configYml.getBoolean("cooldown.enabled"),
 				configYml.getInt("cooldown.time.repeat-global"), configYml.getInt("cooldown.time.repeat"),
-				configYml.getInt("cooldown.time.normal"), configYml.getInt("cooldown.time.command"));
+				configYml.getInt("cooldown.time.normal"), configYml.getInt("cooldown.time.command"),
+				whitelistCooldownYml.getStringList("expressions").toArray(new String[0]));
 		getFloodModule().loadData(configYml.getBoolean("flood.enabled"), configYml.getBoolean("flood.replace"),
 				configYml.getInt("flood.warn.max"), configYml.getString("flood.pattern"),
 				configYml.getString("flood.warn.notification"),

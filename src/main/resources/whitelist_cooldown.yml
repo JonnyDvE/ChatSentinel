@@ -1,0 +1,4 @@
+# This plugin uses Regex for checking messages.
+# Set to [] to disable whitelist completely.
+expressions:
+  - inc
