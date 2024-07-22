@@ -23,7 +23,7 @@ public class AsyncPlayerChatListener implements Listener {
 		this.chatNotificationManager = chatNotificationManager;
 	}
 
-	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
+	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
 	public void onAsyncPlayerChat(AsyncPlayerChatEvent event) {
 		// Get player
 		Player player = event.getPlayer();

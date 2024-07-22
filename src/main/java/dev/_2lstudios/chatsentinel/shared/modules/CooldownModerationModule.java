@@ -1,8 +1,10 @@
 package dev._2lstudios.chatsentinel.shared.modules;
 
+import dev._2lstudios.chatsentinel.bukkit.ChatSentinel;
 import dev._2lstudios.chatsentinel.shared.chat.ChatEventResult;
 import dev._2lstudios.chatsentinel.shared.chat.ChatPlayer;
 import dev._2lstudios.chatsentinel.shared.utils.PatternUtil;
+import org.bukkit.ChatColor;
 
 import java.util.regex.Pattern;
 
@@ -35,6 +37,7 @@ public class CooldownModerationModule extends ModerationModule {
     public float getRemainingTime(ChatPlayer chatPlayer, String message) {
         if (!isEnabled() && message == null)
             return 0;
+        message = ChatColor.stripColor(message);
         if (enableWhitelist && pattern.matcher(message).matches())
             return 0;
         long currentTime = System.currentTimeMillis();
@@ -51,7 +54,6 @@ public class CooldownModerationModule extends ModerationModule {
         } else {
             remainingTime = this.normalTime - lastMessageTimePassed;
         }
-
         if (remainingTime > 0) {
             return ((int) (remainingTime / 100F)) / 10F;
         }
